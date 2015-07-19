@@ -21,12 +21,16 @@ meta_template = """
 
 tunein_service = 'SA_RINCON65031_'
 
-def get_sonos():
-    for zone in soco.discover():
-        print zone.player_name
-        if zone.player_name == sonos_room:
-            return zone
-    return None
+g_sonos = None
+
+def get_sonos(force = True):
+    global g_sonos
+    if (g_sonos is None) or force:
+        for zone in soco.discover():
+            if zone.player_name == sonos_room:
+                print zone.player_name
+                g_sonos = zone
+    return g_sonos
 
 def ungroup_if_grouped(zone):
     print zone.group
@@ -76,13 +80,13 @@ def volume_up():
     zone = get_sonos()
     volume_now = zone.volume
     print "Current Volume: ", volume_now
-    zone.volume = volume_now + 1
+    zone.volume = volume_now + 2
 
 def volume_down():
     zone = get_sonos()
     volume_now = zone.volume
     print "Current Volume: ", volume_now
-    zone.volume = volume_now - 1
+    zone.volume = volume_now - 2
 
 
 def one():
@@ -134,24 +138,30 @@ switcher = {
     
 
 def main():
-    
-    lirc.init(lirc_client)
 
     while True:
-
         try:
-            codes = lirc.nextcode()        
-            for code in codes:
-                print "Key press: ", code
-                if code in switcher.keys():
-                    func = switcher.get(code)
-                    func()
+            print "LIRC Init:"
+            lirc.init(lirc_client)
+            print "Find Sonos:"
+            get_sonos(True)
+    
+            while True:
+                print "Waiting for IR press"
+                codes = lirc.nextcode()
+                print "Got code: ", codes
+                for code in codes:
+                    print "Key press: ", code
+                    if code in switcher.keys():
+                        func = switcher.get(code)
+                        func()
 
-        except Exception:
+        except Exception as e:
+            print "Exception:"
+            print e
             pass
 
-        
-
+        lirc.deinit()
 
 
 if __name__ == "__main__":

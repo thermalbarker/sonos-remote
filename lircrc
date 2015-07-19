@@ -8,14 +8,12 @@ begin
   prog = sonosremote
   button = KEY_VOLUMEUP
   config = volume_up
-  repeat = 1
 end
 
 begin
   prog = sonosremote
   button = KEY_VOLUMEDOWN
   config = volume_down
-  repeat = 1
 end
 
 begin
