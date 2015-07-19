@@ -1,0 +1,5 @@
+Volume Up/Down without repeated press (long press)
+Other button functions
+Playing after ungrouping working properly
+Menu button speaks a list of radio stations
+Cache player and radio list for lower latency

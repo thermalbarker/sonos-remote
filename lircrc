@@ -1,0 +1,77 @@
+begin
+  prog = sonosremote
+  button = KEY_PLAYPAUSE
+  config = play
+end
+
+begin
+  prog = sonosremote
+  button = KEY_VOLUMEUP
+  config = volume_up
+end
+
+begin
+  prog = sonosremote
+  button = KEY_VOLUMEDOWN
+  config = volume_down
+end
+
+begin
+  prog = sonosremote
+  button = KEY_1
+  config = one
+end
+
+begin
+  prog = sonosremote
+  button = KEY_2
+  config = two
+end
+
+begin
+  prog = sonosremote
+  button = KEY_3
+  config = three
+end
+
+begin
+  prog = sonosremote
+  button = KEY_4
+  config = four
+end
+
+begin
+  prog = sonosremote
+  button = KEY_5
+  config = five
+end
+
+begin
+  prog = sonosremote
+  button = KEY_6
+  config = six
+end
+
+begin
+  prog = sonosremote
+  button = KEY_7
+  config = seven
+end
+
+begin
+  prog = sonosremote
+  button = KEY_8
+  config = eight
+end
+
+begin
+  prog = sonosremote
+  button = KEY_9
+  config = nine
+end
+
+begin
+  prog = sonosremote
+  button = KEY_0
+  config = zero
+end
