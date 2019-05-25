@@ -92,6 +92,13 @@ def volume_down():
     print "Current Volume: ", volume_now
     zone.volume = volume_now - 2
 
+def func_previous():
+    zone = get_sonos()
+    zone.previous()
+
+def func_next():
+    zone = get_sonos()
+    zone.next()
 
 def one():
     play_radio(1)
@@ -127,7 +134,8 @@ def zero():
 switcher = {
     'play'  : play,
     'volume_up' : volume_up,
-    'volume_down' : volume_down,
+    'previous' : func_previous,
+    'next' : func_next,
     'one'   : one,
     'two'   : two,
     'three' : three,
