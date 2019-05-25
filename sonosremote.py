@@ -25,7 +25,11 @@ g_sonos = None
 
 def get_sonos(force = True):
     global g_sonos
-    if (g_sonos is None) or force:
+    
+    if force:
+        g_sonos = None
+
+    if g_sonos is None:
         for zone in soco.discover():
             if zone.player_name == sonos_room:
                 print zone.player_name
