@@ -30,10 +30,10 @@ def get_sonos(force = True):
         g_sonos = None
 
     if g_sonos is None:
-        for zone in soco.discover():
-            if zone.player_name == sonos_room:
-                print zone.player_name
-                g_sonos = zone
+        g_sonos = soco.discovery.by_name(sonos_room)
+
+    print "Found room: " + sonos_room + str(g_sonos)
+
     return g_sonos
 
 def ungroup_if_grouped(zone):
@@ -82,15 +82,11 @@ def play():
 
 def volume_up():
     zone = get_sonos()
-    volume_now = zone.volume
-    print "Current Volume: ", volume_now
-    zone.volume = volume_now + 2
+    zone.set_relative_volume(3)
 
 def volume_down():
     zone = get_sonos()
-    volume_now = zone.volume
-    print "Current Volume: ", volume_now
-    zone.volume = volume_now - 2
+    zone.set_relative_volume(-3)
 
 def func_previous():
     zone = get_sonos()
