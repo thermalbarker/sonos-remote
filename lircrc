@@ -12,6 +12,12 @@ end
 
 begin
   prog = sonosremote
+  button = KEY_VOLUMEDOWN
+  config = volume_down
+end
+
+begin
+  prog = sonosremote
   button = KEY_NEXT
   config = next
 end

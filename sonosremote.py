@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import soco
 import lirc
 
@@ -32,16 +32,16 @@ def get_sonos(force = True):
     if g_sonos is None:
         g_sonos = soco.discovery.by_name(sonos_room)
 
-    print "Found room: " + sonos_room + str(g_sonos)
+    print("Found room: " + sonos_room + str(g_sonos))
 
     return g_sonos
 
 def ungroup_if_grouped(zone):
-    print zone.group
+    print(zone.group)
     if zone.group is not None:
         # Check if current player is the co-ordinator
         if zone.group.coordinator is not zone:
-            print "Leaving group"
+            print("Leaving group")
             zone.unjoin()
             
 
@@ -52,12 +52,12 @@ def play_radio(station):
 
     if zone is not None:
         stations = zone.get_favorite_radio_stations()
-        print 'returned %s of a possible %s radio stations:' % (
-            stations['returned'], stations['total'])
+        print('returned %s of a possible %s radio stations:' % (
+            stations['returned'], stations['total']))
         
         if stations['returned'] > preset:
             station = stations['favorites'][preset]
-            print station['title']
+            print(station['title'])
             uri = station['uri']
             # TODO seems at least & needs to be escaped - should move this to
             # play_uri and maybe escape other chars.
@@ -69,11 +69,11 @@ def play_radio(station):
             zone.play_uri(uri, metadata)
 
 def play():
-    print "Play"
+    print("Play")
     zone = get_sonos()
     if zone is not None:
         playing = zone.get_current_transport_info()['current_transport_state']
-        print playing
+        print(playing)
         if playing != 'PLAYING':
             zone.play()
         else:
@@ -130,6 +130,7 @@ def zero():
 switcher = {
     'play'  : play,
     'volume_up' : volume_up,
+    'volume_down' : volume_down,
     'previous' : func_previous,
     'next' : func_next,
     'one'   : one,
@@ -149,24 +150,24 @@ def main():
 
     while True:
         try:
-            print "LIRC Init:"
+            print("LIRC Init:")
             lirc.init(lirc_client)
-            print "Find Sonos:"
+            print("Find Sonos:")
             get_sonos(True)
     
             while True:
-                print "Waiting for IR press"
+                print("Waiting for IR press")
                 codes = lirc.nextcode()
-                print "Got code: ", codes
+                print("Got code: ", codes)
                 for code in codes:
-                    print "Key press: ", code
+                    print("Key press: ", code)
                     if code in switcher.keys():
                         func = switcher.get(code)
                         func()
 
         except Exception as e:
-            print "Exception:"
-            print e
+            print("Exception:")
+            print(e)
             pass
 
         lirc.deinit()
