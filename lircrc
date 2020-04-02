@@ -87,3 +87,9 @@ begin
   button = KEY_0
   config = zero
 end
+
+begin
+  prog = sonosremote
+  button = KEY_EQUAL
+  config = equal
+end

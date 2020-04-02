@@ -126,6 +126,22 @@ def nine():
 def zero():
     play_radio(10)
 
+g_equalizer_toggle = 0
+
+def equal():
+    zone = get_sonos()
+    global g_equalizer_toggle
+    if g_equalizer_toggle == 0:
+        zone.bass = 10
+        zone.treble = -10
+    else:
+        zone.bass = 0
+        zone.treble = 0
+
+    print("Treble: " + str(zone.treble) + " Bass: " + str(zone.bass))
+    g_equalizer_toggle += 1
+    if g_equalizer_toggle > 1:
+        g_equalizer_toggle = 0
 
 switcher = {
     'play'  : play,
@@ -142,7 +158,8 @@ switcher = {
     'seven' : seven,
     'eight' : eight,
     'nine'  : nine,
-    'zero'  : zero
+    'zero'  : zero,
+    'equal' : equal
 }
     
 
