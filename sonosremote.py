@@ -143,6 +143,17 @@ def equal():
     if g_equalizer_toggle > 1:
         g_equalizer_toggle = 0
 
+def menu():
+    zone = get_sonos()
+    lists = zone.get_sonos_playlists()
+    if len(lists) > 0:
+        # Take the first list
+        zone.clear_queue()
+        print(lists[0])
+        zone.add_to_queue(lists[0])
+        print(zone.get_queue())
+        zone.play()
+
 switcher = {
     'play'  : play,
     'volume_up' : volume_up,
@@ -159,7 +170,8 @@ switcher = {
     'eight' : eight,
     'nine'  : nine,
     'zero'  : zero,
-    'equal' : equal
+    'equal' : equal,
+    'menu'  : menu
 }
     
 

@@ -93,3 +93,9 @@ begin
   button = KEY_EQUAL
   config = equal
 end
+
+begin
+  prog = sonosremote
+  button = KEY_MENU
+  config = menu
+end
