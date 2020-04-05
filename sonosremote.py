@@ -51,7 +51,7 @@ def play_radio(station):
     preset = station - 1
 
     if zone is not None:
-        stations = zone.get_favorite_radio_stations()
+        stations = zone.get_favorite_radio_stations(preset, 10)
         print('returned %s of a possible %s radio stations:' % (
             stations['returned'], stations['total']))
         
@@ -67,6 +67,32 @@ def play_radio(station):
 
             ungroup_if_grouped(zone)
             zone.play_uri(uri, metadata)
+
+def play_playlist(playlist):
+    zone = get_sonos()
+    preset = playlist - 1
+
+    if zone is not None:
+        lists = zone.get_sonos_playlists()
+    
+        if (len(lists) > 0) and (preset < len(lists)):
+            # Take the first list
+            zone.clear_queue()
+            print(lists[preset])
+            zone.add_to_queue(lists[preset])
+            # print(zone.get_queue())
+            ungroup_if_grouped(zone)
+            zone.play_from_queue(0, start = True)
+
+g_shift = False
+# Play either a radio station or playlist depending on the shift
+def play_number(station):
+    global g_shift
+    if g_shift:
+        play_playlist(station)
+    else:
+        play_radio(station)
+    g_shift = False
 
 def play():
     print("Play")
@@ -97,34 +123,34 @@ def func_next():
     zone.next()
 
 def one():
-    play_radio(1)
+    play_number(1)
 
 def two():
-    play_radio(2)
+    play_number(2)
 
 def three():
-    play_radio(3)
+    play_number(3)
 
 def four():
-    play_radio(4)
+    play_number(4)
 
 def five():
-    play_radio(5)
+    play_number(5)
 
 def six():
-    play_radio(6)
+    play_number(6)
 
 def seven():
-    play_radio(7)
+    play_number(7)
 
 def eight():
-    play_radio(8)
+    play_number(8)
 
 def nine():
-    play_radio(9)
+    play_number(9)
 
 def zero():
-    play_radio(10)
+    play_number(10)
 
 g_equalizer_toggle = 0
 
@@ -144,15 +170,9 @@ def equal():
         g_equalizer_toggle = 0
 
 def menu():
-    zone = get_sonos()
-    lists = zone.get_sonos_playlists()
-    if len(lists) > 0:
-        # Take the first list
-        zone.clear_queue()
-        print(lists[0])
-        zone.add_to_queue(lists[0])
-        print(zone.get_queue())
-        zone.play()
+    # Toggle the shift value
+    global g_shift
+    g_shift = not g_shift
 
 switcher = {
     'play'  : play,
